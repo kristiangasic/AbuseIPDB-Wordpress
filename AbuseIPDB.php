@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: AbuseIPDB WP Reporter
- * Description: Automatically reports suspicious IPs to AbuseIPDB after multiple failed attempts, including failed wp-admin logins.
- * Version: 1.3
+ * Description: Automatically reports suspicious IPs to AbuseIPDB after multiple failed attempts.
+ * Version: 1.2
  * Author: Kristian Gasic @github.com/kristiangasic
  */
 
@@ -22,9 +22,8 @@ class AbuseIPDBReporter {
         // Create database table for logs
         register_activation_hook(__FILE__, [$this, 'create_log_table']);
 
-        // Monitor requests and failed logins
+        // Monitor requests
         add_action('init', [$this, 'monitor_requests']);
-        add_action('wp_login_failed', [$this, 'handle_failed_login']);
     }
 
     public function add_admin_menu() {
@@ -165,13 +164,6 @@ class AbuseIPDBReporter {
         }
     }
 
-    public function handle_failed_login($username) {
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $uri = '/wp-login.php';
-        $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
-        $this->log_failed_attempt($ip, $uri, 'Failed Login Attempt', $user_agent);
-    }
-
     private function log_failed_attempt($ip, $uri, $referrer, $user_agent) {
         $transient_key = 'abuseipdb_' . md5($ip);
         $attempts = get_transient($transient_key) ?: 0;
@@ -215,7 +207,7 @@ class AbuseIPDBReporter {
         if (is_wp_error($response)) {
             error_log('AbuseIPDB Reporter Error: ' . $response->get_error_message());
         } else {
-                   error_log('AbuseIPDB Reporter: Reported IP - ' . $ip);
+            error_log('AbuseIPDB Reporter: Reported IP - ' . $ip);
             $this->log_to_database($ip, $uri, $user_agent);
         }
     }
@@ -232,3 +224,6 @@ class AbuseIPDBReporter {
         ]);
     }
 }
+
+new AbuseIPDBReporter();
+
