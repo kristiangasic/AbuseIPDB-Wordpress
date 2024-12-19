@@ -93,7 +93,7 @@ This plugin is released under the [MIT License](LICENSE).
 ## Give a Star! 🌟
 
 If you find this plugin helpful, please consider leaving a star ⭐ on the repository. Your support helps improve the plugin and encourages more development.
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kristiangasic)
+
 ---
 
 ## Support
@@ -105,3 +105,5 @@ For more information, visit [gasic.bio](https://gasic.bio).
 ---
 
 Thank you for using the **AbuseIPDB WP Reporter**!
+
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kristiangasic)
